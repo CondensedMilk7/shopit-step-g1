@@ -1,0 +1,25 @@
+<div
+  class="card border-4"
+  [appCardHighlight]="
+    product.discountPercentage > 20 ? 'border-info' : 'border-warning'
+  "
+  [ngClass]="{
+    'border-success': product.discountPercentage > 20
+  }"
+>
+  <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
+  <div class="card-body">
+    <h5 class="card-title">{{ product.title }}</h5>
+    <p class="card-text">
+      {{ product.description }}
+    </p>
+    <p
+      class="text-decoration-line-through"
+      *ngIf="product.discountPercentage > 0"
+    >
+      ${{ (product.price * (100 + product.discountPercentage)) / 100 }}
+    </p>
+    <p>${{ product.price }}</p>
+    <button href="#" class="btn btn-primary">Add To Cart</button>
+  </div>
+</div>
