@@ -9,7 +9,7 @@
 >
   <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
   <div class="card-body">
-    <h5 class="card-title">{{ product.title }}</h5>
+    <h5 class="card-title">{{ product.title | uppercase }}</h5>
     <p class="card-text">
       {{ product.description }}
     </p>
@@ -17,9 +17,13 @@
       class="text-decoration-line-through"
       *ngIf="product.discountPercentage > 0"
     >
-      ${{ (product.price * (100 + product.discountPercentage)) / 100 }}
+      {{
+        (product.price * (100 + product.discountPercentage)) / 100
+          | currency : "EUR"
+      }}
     </p>
-    <p>${{ product.price }}</p>
+    <p>{{ product.price | currency : "EUR" }}</p>
     <button href="#" class="btn btn-primary">Add To Cart</button>
+    <button class="btn btn-danger ms-2" (click)="onDelete()">Delete</button>
   </div>
 </div>

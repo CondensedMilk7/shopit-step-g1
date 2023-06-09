@@ -6,6 +6,7 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { HeaderComponent } from './components/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CardHighlightDirective } from './directives/card-highlight.directive';
+import { ProductFilterPipe } from './pipes/product-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CardHighlightDirective } from './directives/card-highlight.directive';
     ProductCardComponent,
     HeaderComponent,
     CardHighlightDirective,
+    ProductFilterPipe,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],

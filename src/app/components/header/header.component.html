@@ -4,11 +4,32 @@
     <form class="d-flex" role="search">
       <input
         class="form-control me-2"
-        type="search"
+        type="text"
+        name="search"
         placeholder="Search"
         aria-label="Search"
+        [(ngModel)]="searchText"
       />
-      <button class="btn btn-outline-success" type="submit">Search</button>
+      <button
+        class="btn btn-outline-success"
+        type="submit"
+        (click)="search.emit(searchText)"
+      >
+        Search
+      </button>
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+          [checked]="isDark"
+          (click)="toggleDark.emit(!isDark)"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Dark</label
+        >
+      </div>
     </form>
   </div>
 </nav>
