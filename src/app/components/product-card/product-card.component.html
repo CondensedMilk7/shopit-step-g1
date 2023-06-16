@@ -23,7 +23,17 @@
       }}
     </p>
     <p>{{ product.price | currency : "EUR" }}</p>
-    <button href="#" class="btn btn-primary">Add To Cart</button>
-    <button class="btn btn-danger ms-2" (click)="onDelete()">Delete</button>
+    <button
+      href="#"
+      class="btn btn-primary"
+      *ngIf="!inCart"
+      (click)="addToCart.emit(product.id)"
+    >
+      Add To Cart
+    </button>
+    <button class="btn btn-success" *ngIf="inCart">Checkout</button>
+    <button class="btn btn-danger ms-2" *ngIf="inCart" (click)="onDelete()">
+      Delete
+    </button>
   </div>
 </div>

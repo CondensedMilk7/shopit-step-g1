@@ -6,16 +6,11 @@
     [isDark]="isDark"
     (toggleDark)="onToggleDark($event)"
     (search)="onSearch($event)"
+    (navigate)="onNavigate($event)"
   ></app-header>
   <!-- <h1>{{ holiday | date : "dd/MM/yyyy" }}</h1> -->
   <div class="container py-4">
-    <div class="row row-cols-auto gap-3 m-auto">
-      <app-product-card
-        class="col"
-        *ngFor="let product of products | productFilter : productSearchText"
-        [product]="product"
-        (deleteProduct)="onDeleteProduct($event)"
-      ></app-product-card>
-    </div>
+    <app-shop *ngIf="currentPage === 'shop'"></app-shop>
+    <app-cart *ngIf="currentPage === 'cart'"></app-cart>
   </div>
 </div>

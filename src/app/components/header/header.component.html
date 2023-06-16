@@ -1,6 +1,12 @@
-<nav class="navbar bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand">ShopIT STEP</a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="#" (click)="navigate.emit('shop')">Shop</a>
+        <a class="nav-link" href="#" (click)="navigate.emit('cart')">Cart</a>
+      </div>
+    </div>
     <form class="d-flex" role="search">
       <input
         class="form-control me-2"

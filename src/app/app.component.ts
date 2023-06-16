@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PRODUCTS } from './data';
+import { PageType } from './types/page-type';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { PRODUCTS } from './data';
 export class AppComponent implements OnInit {
   isDark = false;
   productSearchText = '';
-  products = PRODUCTS;
+  currentPage: PageType = 'shop';
 
   ngOnInit() {
     const isDark = localStorage.getItem('is_dark');
@@ -20,10 +21,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onDeleteProduct(id: number) {
-    this.products = this.products.filter((product) => product.id !== id);
-  }
-
   onToggleDark(darkMode: boolean) {
     this.isDark = darkMode;
     localStorage.setItem('is_dark', darkMode.toString());
@@ -31,5 +28,9 @@ export class AppComponent implements OnInit {
 
   onSearch(text: string) {
     this.productSearchText = text;
+  }
+
+  onNavigate(page: PageType) {
+    this.currentPage = page;
   }
 }

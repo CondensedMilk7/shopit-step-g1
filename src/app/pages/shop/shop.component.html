@@ -1,0 +1,8 @@
+<div class="row row-cols-auto gap-3 m-auto">
+  <app-product-card
+    class="col"
+    *ngFor="let product of products | productFilter : productSearchText"
+    [product]="product"
+    (addToCart)="onAddToCart($event)"
+  ></app-product-card>
+</div>

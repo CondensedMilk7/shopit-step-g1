@@ -7,6 +7,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { CardHighlightDirective } from './directives/card-highlight.directive';
 import { ProductFilterPipe } from './pipes/product-filter.pipe';
+import { ShopComponent } from './pages/shop/shop.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { ProductFilterPipe } from './pipes/product-filter.pipe';
     HeaderComponent,
     CardHighlightDirective,
     ProductFilterPipe,
+    ShopComponent,
+    CartComponent,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PageType } from 'src/app/types/page-type';
 
 @Component({
   selector: 'app-header',
@@ -10,4 +11,5 @@ export class HeaderComponent {
   @Input() isDark = false;
   @Output() toggleDark = new EventEmitter<boolean>();
   @Output() search = new EventEmitter<string>();
+  @Output() navigate = new EventEmitter<PageType>();
 }
