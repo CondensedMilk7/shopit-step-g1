@@ -32,4 +32,13 @@ export class ProductsService {
       throw new Error(`Could not add product to cart. ID: ${id}`);
     }
   }
+
+  getRecommended() {
+    const randomIndex = Math.floor(Math.random() * this.products.length);
+    return [this.products[randomIndex]];
+  }
+
+  getProductById(id: number) {
+    return this.products.find((p) => p.id === id) || null;
+  }
 }

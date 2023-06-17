@@ -9,6 +9,12 @@ import { CardHighlightDirective } from './directives/card-highlight.directive';
 import { ProductFilterPipe } from './pipes/product-filter.pipe';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { RouterModule } from '@angular/router';
+import { APP_ROUTES } from './app.routing';
+import { RecommendedComponent } from './pages/shop/recommended/recommended.component';
+import { AllComponent } from './pages/shop/all/all.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { ProductDetailsComponent } from './pages/shop/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +25,12 @@ import { CartComponent } from './pages/cart/cart.component';
     ProductFilterPipe,
     ShopComponent,
     CartComponent,
+    RecommendedComponent,
+    AllComponent,
+    SignInComponent,
+    ProductDetailsComponent,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(APP_ROUTES)],
   providers: [],
   bootstrap: [AppComponent],
 })

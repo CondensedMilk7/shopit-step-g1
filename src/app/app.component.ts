@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PRODUCTS } from './data';
-import { PageType } from './types/page-type';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +8,6 @@ import { PageType } from './types/page-type';
 export class AppComponent implements OnInit {
   isDark = false;
   productSearchText = '';
-  currentPage: PageType = 'shop';
 
   ngOnInit() {
     const isDark = localStorage.getItem('is_dark');
@@ -28,9 +25,5 @@ export class AppComponent implements OnInit {
 
   onSearch(text: string) {
     this.productSearchText = text;
-  }
-
-  onNavigate(page: PageType) {
-    this.currentPage = page;
   }
 }

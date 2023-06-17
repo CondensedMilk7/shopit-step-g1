@@ -9,7 +9,11 @@
 >
   <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
   <div class="card-body">
-    <h5 class="card-title">{{ product.title | uppercase }}</h5>
+    <h5 class="card-title">
+      <a routerLink="/shop/{{ product.id }}">
+        {{ product.title | uppercase }}</a
+      >
+    </h5>
     <p class="card-text">
       {{ product.description }}
     </p>

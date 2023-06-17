@@ -1,10 +1,9 @@
-<h2>My Shopping Cart</h2>
+<h2>For You</h2>
 <div class="row row-cols-auto gap-3 m-auto mt-4">
   <app-product-card
     class="col"
     *ngFor="let product of products"
     [product]="product"
-    [inCart]="true"
-    (deleteProduct)="onDeleteProduct($event)"
+    (addToCart)="onAddToCart($event)"
   ></app-product-card>
 </div>

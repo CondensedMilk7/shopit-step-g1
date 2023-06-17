@@ -3,8 +3,25 @@
     <a class="navbar-brand">ShopIT STEP</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="#" (click)="navigate.emit('shop')">Shop</a>
-        <a class="nav-link" href="#" (click)="navigate.emit('cart')">Cart</a>
+        <a
+          class="nav-link"
+          routerLink="/shop"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Shop</a
+        >
+        <a
+          class="nav-link"
+          routerLink="/shop/recommended"
+          routerLinkActive="active"
+          >For You</a
+        >
+        <a class="nav-link" routerLink="/cart" routerLinkActive="active"
+          >Cart</a
+        >
+        <a class="nav-link" routerLink="/sign-in" routerLinkActive="active"
+          >Sign In</a
+        >
       </div>
     </div>
     <form class="d-flex" role="search">

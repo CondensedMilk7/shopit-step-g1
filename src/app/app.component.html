@@ -6,11 +6,8 @@
     [isDark]="isDark"
     (toggleDark)="onToggleDark($event)"
     (search)="onSearch($event)"
-    (navigate)="onNavigate($event)"
   ></app-header>
-  <!-- <h1>{{ holiday | date : "dd/MM/yyyy" }}</h1> -->
   <div class="container py-4">
-    <app-shop *ngIf="currentPage === 'shop'"></app-shop>
-    <app-cart *ngIf="currentPage === 'cart'"></app-cart>
+    <router-outlet></router-outlet>
   </div>
 </div>
