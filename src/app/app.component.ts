@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   isDark = false;
-  productSearchText = '';
+  searchText = '';
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     const isDark = localStorage.getItem('is_dark');
@@ -16,6 +19,13 @@ export class AppComponent implements OnInit {
     } else {
       this.isDark = false;
     }
+
+    this.route.queryParamMap.subscribe((paramMap) => {
+      const search = paramMap.get('search');
+      if (search) {
+        this.searchText = search;
+      }
+    });
   }
 
   onToggleDark(darkMode: boolean) {
@@ -24,6 +34,6 @@ export class AppComponent implements OnInit {
   }
 
   onSearch(text: string) {
-    this.productSearchText = text;
+    this.router.navigate(['shop'], { queryParams: { search: text } });
   }
 }

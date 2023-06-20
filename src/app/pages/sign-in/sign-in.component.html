@@ -1,1 +1,43 @@
-<p>sign-in works!</p>
+<form #signInForm="ngForm">
+  <div class="mb-3 row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input
+        type="email"
+        name="email"
+        class="form-control"
+        id="staticEmail"
+        required
+        [(ngModel)]="signInData.email"
+        #emailCtrl="ngModel"
+      />
+    </div>
+    <div class="invalid" *ngIf="emailCtrl.invalid && emailCtrl.dirty">
+      <p>Email is required!</p>
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input
+        name="password"
+        type="password"
+        class="form-control"
+        id="inputPassword"
+        required
+        [(ngModel)]="signInData.password"
+        #passwordCtrl="ngModel"
+      />
+    </div>
+    <div class="invalid" *ngIf="passwordCtrl.invalid && passwordCtrl.dirty">
+      <p>Password is required!</p>
+    </div>
+  </div>
+  <button
+    class="btn btn-primary"
+    (click)="onSubmit()"
+    [disabled]="signInForm.invalid"
+  >
+    Sign In
+  </button>
+</form>

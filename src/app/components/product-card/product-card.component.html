@@ -6,6 +6,7 @@
   [ngClass]="{
     'border-success': product.discountPercentage > 20
   }"
+  [id]="product.id"
 >
   <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
   <div class="card-body">

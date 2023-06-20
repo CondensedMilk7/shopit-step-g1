@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  searchText = '';
+  @Input() searchText = '';
   @Input() isDark = false;
   @Output() toggleDark = new EventEmitter<boolean>();
   @Output() search = new EventEmitter<string>();
