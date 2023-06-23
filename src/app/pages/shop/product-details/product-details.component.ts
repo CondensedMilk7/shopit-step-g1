@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/types/product';
 
@@ -8,8 +9,9 @@ import { Product } from 'src/app/types/product';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: Product | null = null;
+  destroyed$ = new Subject<void>();
 
   constructor(
     private productsService: ProductsService,
@@ -17,12 +19,18 @@ export class ProductDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const productId = paramMap.get('productId');
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((paramMap) => {
+        const productId = paramMap.get('productId');
 
-      if (productId) {
-        this.product = this.productsService.getProductById(Number(productId));
-      }
-    });
+        if (productId) {
+          this.product = this.productsService.getProductById(Number(productId));
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
   }
 }
