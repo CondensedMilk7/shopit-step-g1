@@ -1,0 +1,46 @@
+<button (click)="updateName()">Change Name</button>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name" class="col-form-label">Name</label>
+    <input type="text" id="name" class="form-control" formControlName="name" />
+  </div>
+  <div>
+    <label for="email" class="col-form-label">Email</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      formControlName="email"
+    />
+  </div>
+  <div>
+    <label for="password" class="col-form-label">Password</label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      formControlName="password"
+    />
+  </div>
+  <div formArrayName="positions">
+    <h3>Positions</h3>
+    <button class="btn btn-secondary" type="button" (click)="addPosition()">
+      +
+    </button>
+    <input
+      class="d-block"
+      type="text"
+      placeholder="Your position"
+      *ngFor="let position of positions.controls; let i = index"
+      [formControlName]="i"
+    />
+  </div>
+
+  <button class="btn btn-primary" [disabled]="registerForm.invalid">
+    Submit
+  </button>
+</form>
+<div>
+  <!-- <h3>Result:</h3>
+  <div>{{ registerForm | json }}</div> -->
+</div>
