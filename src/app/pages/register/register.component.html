@@ -3,6 +3,24 @@
   <div>
     <label for="name" class="col-form-label">Name</label>
     <input type="text" id="name" class="form-control" formControlName="name" />
+    <div
+      class="validation-error"
+      *ngIf="controls.name.errors?.['required'] && controls.name.dirty"
+    >
+      This field is required!
+    </div>
+    <div
+      class="validation-error"
+      *ngIf="controls.name.errors?.['minlength'] && controls.name.dirty"
+    >
+      This name is too short!
+    </div>
+    <div
+      class="validation-error"
+      *ngIf="controls.name.errors?.['badName'] && controls.name.dirty"
+    >
+      {{ controls.name.errors?.['badName']}}
+    </div>
   </div>
   <div>
     <label for="email" class="col-form-label">Email</label>
@@ -12,6 +30,12 @@
       class="form-control"
       formControlName="email"
     />
+    <div
+      class="validation-error"
+      *ngIf="controls.email.invalid && controls.email.dirty"
+    >
+      Please provide valid email.
+    </div>
   </div>
   <div>
     <label for="password" class="col-form-label">Password</label>
@@ -20,7 +44,37 @@
       id="password"
       class="form-control"
       formControlName="password"
+      (input)="controls.confirmPassword.updateValueAndValidity()"
     />
+    <div
+      class="validation-error"
+      *ngIf="controls.password.errors?.['minlength']"
+    >
+      The password must be at least
+      {{controls.password.errors?.['minlength'].requiredLength}} characters
+      long.
+    </div>
+    <div
+      class="validation-error"
+      *ngIf="controls.password.errors?.['required'] && controls.password.dirty"
+    >
+      This field is required!
+    </div>
+  </div>
+  <div>
+    <label for="confirmPassword" class="col-form-label">Confirm Password</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      class="form-control"
+      formControlName="confirmPassword"
+    />
+    <div
+      class="validation-error"
+      *ngIf="controls.confirmPassword.errors?.['confirmPassword']"
+    >
+      {{ controls.confirmPassword.errors?.['confirmPassword']}}
+    </div>
   </div>
   <div formArrayName="positions">
     <h3>Positions</h3>
