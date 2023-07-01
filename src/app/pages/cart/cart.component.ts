@@ -8,16 +8,17 @@ import { Product } from 'src/app/types/product';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  products!: Product[];
+  cart$ = this.productsService.cart$;
+  loading$ = this.productsService.loading$;
 
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.getCart();
+    this.productsService.getCart();
   }
 
   onDeleteProduct(id: number) {
-    this.productsService.deleteFromCart(id);
-    this.products = this.productsService.getCart();
+    // this.productsService.deleteFromCart(id);
+    // this.products = this.productsService.getCart();
   }
 }

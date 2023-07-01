@@ -1,5 +1,11 @@
 <h2>For You</h2>
-<div class="row row-cols-auto gap-3 m-auto mt-4">
+<div *ngIf="loading$ | async" class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div
+  *ngIf="products$ | async as products"
+  class="row row-cols-auto gap-3 m-auto mt-4"
+>
   <app-product-card
     class="col"
     *ngFor="let product of products"

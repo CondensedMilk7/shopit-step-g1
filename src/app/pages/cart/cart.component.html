@@ -1,8 +1,11 @@
 <h2>My Shopping Cart</h2>
-<div class="row row-cols-auto gap-3 m-auto mt-4">
+<div *ngIf="loading$ | async" class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div *ngIf="cart$ | async as cart" class="row row-cols-auto gap-3 m-auto mt-4">
   <app-product-card
     class="col"
-    *ngFor="let product of products"
+    *ngFor="let product of cart.products"
     [product]="product"
     [inCart]="true"
     (deleteProduct)="onDeleteProduct($event)"

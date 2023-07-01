@@ -1,8 +1,11 @@
 <h2>Shop</h2>
-<div class="row row-cols-auto gap-3 m-auto mt-4">
+<div *ngIf="loading$ | async" class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="products-grid m-auto mt-4" *ngIf="products$ | async as products">
   <app-product-card
     class="col"
-    *ngFor="let product of products | productFilter : productSearchText"
+    *ngFor="let product of products"
     [product]="product"
     (addToCart)="onAddToCart($event)"
   ></app-product-card>

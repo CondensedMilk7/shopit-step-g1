@@ -1,0 +1,17 @@
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 800px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

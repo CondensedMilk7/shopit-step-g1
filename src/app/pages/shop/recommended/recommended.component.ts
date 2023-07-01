@@ -8,11 +8,13 @@ import { Product } from 'src/app/types/product';
   styleUrls: ['./recommended.component.scss'],
 })
 export class RecommendedComponent implements OnInit {
-  products: Product[] = [];
+  products$ = this.productsService.products$;
+  loading$ = this.productsService.loading$;
+
   constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products = this.productsService.getRecommended();
+    this.productsService.getProducts();
   }
 
   onAddToCart(id: number) {
