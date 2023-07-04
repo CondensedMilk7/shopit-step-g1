@@ -12,6 +12,7 @@ import { Product } from 'src/app/types/product';
 export class AllComponent implements OnInit, OnDestroy {
   products$ = this.productsService.products$;
   loading$ = this.productsService.loading$;
+  productLoading$ = this.productsService.productLoading$;
   destroyed$ = new Subject<void>();
 
   constructor(
@@ -30,6 +31,12 @@ export class AllComponent implements OnInit, OnDestroy {
           this.productsService.getProducts();
         }
       });
+  }
+
+  onAdd() {
+    this.productsService.updateProduct(this.products$.value[0].id, {
+      title: 'Hello',
+    });
   }
 
   onAddToCart(id: number) {

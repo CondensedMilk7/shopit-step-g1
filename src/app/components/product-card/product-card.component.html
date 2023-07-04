@@ -1,44 +1,85 @@
-<div
-  class="card border-4"
-  [appCardHighlight]="
-    product.discountPercentage > 20 ? 'border-info' : 'border-warning'
-  "
-  [ngClass]="{
-    'border-success': product.discountPercentage > 20
-  }"
-  [id]="product.id"
->
-  <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
-  <div class="card-body">
-    <h5 class="card-title">
-      <a routerLink="/shop/{{ product.id }}">
-        {{ product.title | uppercase }}</a
+<div class="card border-4">
+  <div *ngIf="product">
+    <img [src]="product.thumbnail" class="card-img-top" [alt]="product.title" />
+    <div class="card-body">
+      <h5 class="card-title">
+        <a routerLink="/shop/{{ product.id }}">
+          {{ product.title | uppercase }}</a
+        >
+      </h5>
+      <p class="card-text">
+        {{ product.description }}
+      </p>
+      <p
+        class="text-decoration-line-through"
+        *ngIf="product.discountPercentage > 0"
       >
-    </h5>
-    <p class="card-text">
-      {{ product.description }}
-    </p>
-    <p
-      class="text-decoration-line-through"
-      *ngIf="product.discountPercentage > 0"
-    >
-      {{
-        (product.price * (100 + product.discountPercentage)) / 100
-          | currency : "EUR"
-      }}
-    </p>
-    <p>{{ product.price | currency : "EUR" }}</p>
-    <button
-      href="#"
-      class="btn btn-primary"
-      *ngIf="!inCart"
-      (click)="addToCart.emit(product.id)"
-    >
-      Add To Cart
-    </button>
-    <button class="btn btn-success" *ngIf="inCart">Checkout</button>
-    <button class="btn btn-danger ms-2" *ngIf="inCart" (click)="onDelete()">
-      Delete
-    </button>
+        {{
+          (product.price * (100 + product.discountPercentage)) / 100
+            | currency : "EUR"
+        }}
+      </p>
+      <p>{{ product.price | currency : "EUR" }}</p>
+      <button
+        href="#"
+        class="btn btn-primary"
+        [disabled]="loading"
+        (click)="addToCart.emit(product.id)"
+      >
+        <ng-container *ngIf="!loading">Add To Cart</ng-container>
+        <ng-container *ngIf="loading">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Loading...
+        </ng-container>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="cartProduct">
+    <div class="card-body">
+      <h5 class="card-title">
+        <a routerLink="/shop/{{ cartProduct.id }}">
+          {{ cartProduct.title | uppercase }}</a
+        >
+      </h5>
+      <p class="card-text">Quantity: {{ cartProduct.quantity }}</p>
+      <p
+        class="text-decoration-line-through"
+        *ngIf="cartProduct.discountPercentage > 0"
+      >
+        {{ cartProduct.price | currency : "EUR" }}
+      </p>
+      <p>{{ cartProduct.discountedPrice | currency : "EUR" }}</p>
+
+      <button class="btn btn-success" [disabled]="loading">
+        <ng-container *ngIf="!loading">Checkout</ng-container>
+        <ng-container *ngIf="loading">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Loading...
+        </ng-container>
+      </button>
+      <button
+        class="btn btn-danger ms-2"
+        [disabled]="loading"
+        (click)="deleteProduct.emit(cartProduct.id)"
+      >
+        <ng-container *ngIf="!loading">Delete</ng-container>
+        <ng-container *ngIf="loading">
+          <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Loading...
+        </ng-container>
+      </button>
+    </div>
   </div>
 </div>

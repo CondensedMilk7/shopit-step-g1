@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { GetProductsResponse, Product } from '../types/product';
 import { BehaviorSubject } from 'rxjs';
-import { Cart, GetCartResponse } from '../types/cart';
+import { Cart, CartProduct, GetCartResponse } from '../types/cart';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -22,8 +22,7 @@ export class ProductsService {
     totalQuantity: 0,
   });
   loading$ = new BehaviorSubject<boolean>(false);
-
-  private cartProducts = PRODUCTS.splice(0, 2);
+  productLoading$ = new BehaviorSubject<number | null>(null);
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -51,7 +50,18 @@ export class ProductsService {
       });
   }
 
-  deleteProduct(id: number) {}
+  deleteFromCart(cartId: number, toDeleteId: number) {
+    this.productLoading$.next(toDeleteId);
+    const products = this.cart$.value.products;
+    const filteredProducts = products.filter((p) => p.id !== toDeleteId);
+    const payload = { merge: false, products: filteredProducts };
+    this.http
+      .put<Cart>(`${this.baseUrl}/carts/${cartId}`, payload)
+      .subscribe((updatedCart) => {
+        this.cart$.next(updatedCart);
+        this.productLoading$.next(null);
+      });
+  }
 
   getCart() {
     this.loading$.next(true);
@@ -63,21 +73,40 @@ export class ProductsService {
       });
   }
 
-  deleteFromCart(id: number) {
-    this.cartProducts = this.cartProducts.filter(
-      (product) => product.id !== id
-    );
+  addToCart(id: number, quantity: number = 1) {
+    this.productLoading$.next(id);
+
+    const product = { id, quantity };
+    const payload = {
+      merge: false,
+      products: [...this.cart$.value.products, product],
+    };
+
+    this.http
+      .put<Cart>(`${this.baseUrl}/carts/19`, payload)
+      .subscribe((updatedCart) => {
+        this.cart$.next(updatedCart);
+        this.productLoading$.next(null);
+        this.router.navigate(['/cart']);
+      });
   }
 
-  addToCart(id: number) {
-    const productToAdd = this.products.find((p) => p.id === id);
-    if (productToAdd) {
-      this.cartProducts.push(productToAdd);
-      this.router.navigate(['cart'], { fragment: `${id}` });
-    } else {
-      throw new Error(`Could not add product to cart. ID: ${id}`);
-    }
+  addProduct(product: Partial<Product>) {
+    this.http
+      .post<Product>(`${this.baseUrl}/products/add`, product)
+      .subscribe((product) => {
+        console.log(product);
+        this.products$.next([...this.products$.value, product]);
+      });
   }
+
+  // updateProduct(id: number, product: Partial<Product>) {
+  //   this.http
+  //     .put<Product>(`${this.baseUrl}/products/${id}`, product)
+  //     .subscribe((product) => {
+  //       console.log(product);
+  //     });
+  // }
 
   getRecommended() {
     const randomIndex = Math.floor(Math.random() * this.products.length);

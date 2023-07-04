@@ -2,12 +2,15 @@
 <div *ngIf="loading$ | async" class="spinner-border" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
-<div *ngIf="cart$ | async as cart" class="row row-cols-auto gap-3 m-auto mt-4">
-  <app-product-card
-    class="col"
-    *ngFor="let product of cart.products"
-    [product]="product"
-    [inCart]="true"
-    (deleteProduct)="onDeleteProduct($event)"
-  ></app-product-card>
-</div>
+<ng-container *ngIf="cart$ | async as cart">
+  <h3>Total: {{ cart.discountedTotal | currency : "EUR" }}</h3>
+  <div class="row row-cols-auto gap-3 m-auto mt-4">
+    <app-product-card
+      class="col"
+      *ngFor="let product of cart.products"
+      [loading]="(productLoading$ | async) === product.id"
+      [cartProduct]="product"
+      (deleteProduct)="onDeleteProduct(cart.id, $event)"
+    ></app-product-card>
+  </div>
+</ng-container>

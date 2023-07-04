@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CartProduct } from 'src/app/types/cart';
 import { Product } from 'src/app/types/product';
 
 @Component({
@@ -8,11 +9,8 @@ import { Product } from 'src/app/types/product';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
-  @Input() inCart = false;
+  @Input() cartProduct!: CartProduct;
+  @Input() loading: boolean = false;
   @Output() addToCart = new EventEmitter<number>();
   @Output() deleteProduct = new EventEmitter<number>();
-
-  onDelete() {
-    this.deleteProduct.emit(this.product.id);
-  }
 }
