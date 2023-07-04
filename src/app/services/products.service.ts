@@ -100,13 +100,13 @@ export class ProductsService {
       });
   }
 
-  // updateProduct(id: number, product: Partial<Product>) {
-  //   this.http
-  //     .put<Product>(`${this.baseUrl}/products/${id}`, product)
-  //     .subscribe((product) => {
-  //       console.log(product);
-  //     });
-  // }
+  updateProduct(id: number, product: Partial<Product>) {
+    this.http
+      .put<Product>(`${this.baseUrl}/products/${id}`, product)
+      .subscribe((product) => {
+        console.log(product);
+      });
+  }
 
   getRecommended() {
     const randomIndex = Math.floor(Math.random() * this.products.length);

@@ -33,11 +33,11 @@ export class AllComponent implements OnInit, OnDestroy {
       });
   }
 
-  onAdd() {
-    this.productsService.updateProduct(this.products$.value[0].id, {
-      title: 'Hello',
-    });
-  }
+  // onAdd() {
+  //   this.productsService.updateProduct(this.products$.value[0].id, {
+  //     title: 'Hello',
+  //   });
+  // }
 
   onAddToCart(id: number) {
     this.productsService.addToCart(id);
