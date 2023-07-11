@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { combineLatest, map } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -7,9 +8,17 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent {
-  cart$ = this.productsService.cart$;
-  loading$ = this.productsService.loading$;
-  productLoading$ = this.productsService.productLoading$;
+  private cart$ = this.productsService.cart;
+  private loading$ = this.productsService.loading;
+  private productLoading$ = this.productsService.productLoading;
+
+  vm$ = combineLatest([this.cart$, this.loading$, this.productLoading$]).pipe(
+    map(([cart, loading, productLoading]) => ({
+      cart,
+      loading,
+      productLoading,
+    }))
+  );
 
   constructor(private productsService: ProductsService) {}
 

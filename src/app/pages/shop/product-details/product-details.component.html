@@ -1,8 +1,8 @@
-<div *ngIf="product">
+<div *ngIf="product$ | async as product">
   <h1>{{ product.title }}</h1>
   <p>{{ product.description }}</p>
   <img [src]="product.thumbnail" />
 </div>
-<div *ngIf="!product">
+<div *ngIf="!(product$ | async)">
   <h1>Product not found</h1>
 </div>

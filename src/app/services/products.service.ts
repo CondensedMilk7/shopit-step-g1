@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import { PRODUCTS } from '../data';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { GetProductsResponse, Product } from '../types/product';
 import { BehaviorSubject } from 'rxjs';
-import { Cart, CartProduct, GetCartResponse } from '../types/cart';
+import { Cart, GetCartResponse } from '../types/cart';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   baseUrl = 'https://dummyjson.com';
-  products: Product[] = [];
 
-  products$ = new BehaviorSubject<Product[]>([]);
-  cart$ = new BehaviorSubject<Cart>({
+  private products$ = new BehaviorSubject<Product[]>([]);
+  private cart$ = new BehaviorSubject<Cart>({
     userId: 0,
     discountedTotal: 0,
     id: 0,
@@ -21,8 +19,24 @@ export class ProductsService {
     totalProducts: 0,
     totalQuantity: 0,
   });
-  loading$ = new BehaviorSubject<boolean>(false);
-  productLoading$ = new BehaviorSubject<number | null>(null);
+  private loading$ = new BehaviorSubject<boolean>(false);
+  private productLoading$ = new BehaviorSubject<number | null>(null);
+
+  get products() {
+    return this.products$.asObservable();
+  }
+
+  get cart() {
+    return this.cart$.asObservable();
+  }
+
+  get loading() {
+    return this.loading$.asObservable();
+  }
+
+  get productLoading() {
+    return this.productLoading$.asObservable();
+  }
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -108,12 +122,7 @@ export class ProductsService {
       });
   }
 
-  getRecommended() {
-    const randomIndex = Math.floor(Math.random() * this.products.length);
-    return [this.products[randomIndex]];
-  }
-
   getProductById(id: number) {
-    return this.products.find((p) => p.id === id) || null;
+    return this.http.get<Product>(`${this.baseUrl}/products/${id}`);
   }
 }

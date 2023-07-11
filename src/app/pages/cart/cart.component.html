@@ -1,16 +1,17 @@
 <h2>My Shopping Cart</h2>
-<div *ngIf="loading$ | async" class="spinner-border" role="status">
-  <span class="visually-hidden">Loading...</span>
-</div>
-<ng-container *ngIf="cart$ | async as cart">
-  <h3>Total: {{ cart.discountedTotal | currency : "EUR" }}</h3>
+<ng-container *ngIf="vm$ | async as vm">
+  <div *ngIf="vm.loading" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+
+  <h3>Total: {{ vm.cart.discountedTotal | currency : "EUR" }}</h3>
   <div class="row row-cols-auto gap-3 m-auto mt-4">
     <app-product-card
       class="col"
-      *ngFor="let product of cart.products"
-      [loading]="(productLoading$ | async) === product.id"
+      *ngFor="let product of vm.cart.products"
+      [loading]="vm.productLoading === product.id"
       [cartProduct]="product"
-      (deleteProduct)="onDeleteProduct(cart.id, $event)"
+      (deleteProduct)="onDeleteProduct(vm.cart.id, $event)"
     ></app-product-card>
   </div>
 </ng-container>

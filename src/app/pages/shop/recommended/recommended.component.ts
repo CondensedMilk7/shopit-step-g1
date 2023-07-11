@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
-import { Product } from 'src/app/types/product';
 
 @Component({
   selector: 'app-recommended',
@@ -8,8 +7,8 @@ import { Product } from 'src/app/types/product';
   styleUrls: ['./recommended.component.scss'],
 })
 export class RecommendedComponent implements OnInit {
-  products$ = this.productsService.products$;
-  loading$ = this.productsService.loading$;
+  products$ = this.productsService.products;
+  loading$ = this.productsService.loading;
 
   constructor(private productsService: ProductsService) {}
 
