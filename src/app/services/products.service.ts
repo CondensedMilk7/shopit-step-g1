@@ -4,10 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { GetProductsResponse, Product } from '../types/product';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, GetCartResponse } from '../types/cart';
+import { ENVIRONMENT } from 'src/environment/environment';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  baseUrl = 'https://dummyjson.com';
+  baseUrl = ENVIRONMENT.baseUrl;
 
   private products$ = new BehaviorSubject<Product[]>([]);
   private cart$ = new BehaviorSubject<Cart>({
@@ -38,7 +40,11 @@ export class ProductsService {
     return this.productLoading$.asObservable();
   }
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getProducts() {
     this.loading$.next(true);
@@ -79,8 +85,16 @@ export class ProductsService {
 
   getCart() {
     this.loading$.next(true);
+    const userId = this.authService.getUserId();
+    const token = this.authService.getToken();
+
     this.http
-      .get<GetCartResponse>(`${this.baseUrl}/carts/user/5`)
+      .get<GetCartResponse>(`${this.baseUrl}/auth/carts/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
       .subscribe((response) => {
         this.cart$.next(response.carts[0]);
         this.loading$.next(false);

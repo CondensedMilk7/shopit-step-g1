@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, combineLatest, map, takeUntil, tap } from 'rxjs';
+import { Subject, combineLatest, map, tap } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
-import { Product } from 'src/app/types/product';
 
 @Component({
   selector: 'app-all',
