@@ -7,6 +7,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { ProductDetailsComponent } from './pages/shop/product-details/product-details.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { canActivateAuthorized } from './guards';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const APP_ROUTES: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -29,5 +30,6 @@ export const APP_ROUTES: Routes = [
     component: CartComponent,
     canActivate: [canActivateAuthorized],
   },
-  { path: '', redirectTo: 'shop', pathMatch: 'full' },
+  { path: '', redirectTo: '/shop', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent },
 ];

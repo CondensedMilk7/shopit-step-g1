@@ -35,11 +35,6 @@ export class AuthService {
   ) {}
 
   init() {
-    const token = localStorage.getItem(ENVIRONMENT.tokenKey);
-    if (!token) {
-      this.signOut();
-      this.router.navigate(['/']);
-    }
     const user = localStorage.getItem(ENVIRONMENT.userKey);
     if (user) {
       this.user$.next(JSON.parse(user));
