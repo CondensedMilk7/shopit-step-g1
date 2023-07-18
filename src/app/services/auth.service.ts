@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ENVIRONMENT } from 'src/environment/environment';
 import { LoginCredentials, User } from '../types/user';
 import { BehaviorSubject, catchError, of, tap } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,11 @@ export class AuthService {
     return this.user$.asObservable();
   }
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private jwtHelper: JwtHelperService
+  ) {}
 
   init() {
     const token = localStorage.getItem(ENVIRONMENT.tokenKey);
@@ -76,5 +81,19 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem(ENVIRONMENT.tokenKey);
+  }
+
+  isAuthenticated() {
+    return !this.jwtHelper.isTokenExpired();
+  }
+
+  canActivate() {
+    if (!this.isAuthenticated()) {
+      this.signOut();
+      this.router.navigate(['/sign-in']);
+      return false;
+    } else {
+      return true;
+    }
   }
 }

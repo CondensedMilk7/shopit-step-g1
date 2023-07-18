@@ -84,21 +84,22 @@ export class ProductsService {
   }
 
   getCart() {
-    this.loading$.next(true);
-    const userId = this.authService.getUserId();
-    const token = this.authService.getToken();
+    if (this.authService.isAuthenticated()) {
+      this.loading$.next(true);
+      const userId = this.authService.getUserId();
+      const token = this.authService.getToken();
 
-    this.http
-      .get<GetCartResponse>(`${this.baseUrl}/auth/carts/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .subscribe((response) => {
-        this.cart$.next(response.carts[0]);
-        this.loading$.next(false);
-      });
+      this.http
+        .get<GetCartResponse>(`${this.baseUrl}/auth/carts/user/${userId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .subscribe((response) => {
+          this.cart$.next(response.carts[0]);
+          this.loading$.next(false);
+        });
+    }
   }
 
   addToCart(id: number, quantity: number = 1) {
@@ -109,9 +110,10 @@ export class ProductsService {
       merge: false,
       products: [...this.cart$.value.products, product],
     };
+    const cartId = this.cart$.value.id;
 
     this.http
-      .put<Cart>(`${this.baseUrl}/carts/19`, payload)
+      .put<Cart>(`${this.baseUrl}/auth/carts/${cartId}`, payload)
       .subscribe((updatedCart) => {
         this.cart$.next(updatedCart);
         this.productLoading$.next(null);
